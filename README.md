@@ -20,7 +20,15 @@
 # 팀원과 리뷰어
 ### 팀원
 - JusBug
+![IMG_8062](https://user-images.githubusercontent.com/124647187/236610201-989894c5-484f-4e57-9725-a548643e3644.png)
+
+<br>
+
 - idinaloq
+![스크린샷 2023-04-24 오후 4 47 09](https://user-images.githubusercontent.com/124647187/236610239-5c3bab17-dbe4-4880-b50b-306d4ef41b76.png)
+
+<br>
+
 ### 리뷰어
 - Rowan
 <br>

@@ -10,8 +10,7 @@ struct RockPaperScissors {
     var isSecondGame: Bool = false
     var isUserTurn: Bool = true
     var isComputerTurn: Bool = false
-    var turnDictionary: [Bool: String]
-    = [isUserTurn: "사용자", isComputerTurn: "컴퓨터"]
+    var turnDictionary: [Bool: String] = [true: "사용자", false: "컴퓨터"]
     var whoseTurn: String?
     
     mutating func start() {
@@ -30,6 +29,7 @@ struct RockPaperScissors {
                 try startSecondGame()
             } catch UserCardsError.invalidinputError {
                 print("잘못된 입력입니다. 다시 시도해주세요.")
+                changeTurn()
             } catch {
                 print("알 수 없는 오류가 발생했습니다.")
             }

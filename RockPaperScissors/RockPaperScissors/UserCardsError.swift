@@ -6,8 +6,6 @@
 //
 
 enum UserCardsError: Error {
-    case firstGameInputError
-    case SecondGameInputError
-
+    case invalidinputError
 }
 

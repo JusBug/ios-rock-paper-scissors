@@ -8,27 +8,30 @@
 struct RockPaperScissors {
     var isFirstGame: Bool = true
     var isSecondGame: Bool = false
-    var turnDictionary: [Bool: String] = [true: "사용자", false: "컴퓨터"]
+    var isUserTurn: Bool = true
+    var isComputerTurn: Bool = false
+    var turnDictionary: [Bool: String]
+    = [isUserTurn: "사용자", isComputerTurn: "컴퓨터"]
     var whoseTurn: String?
     
     mutating func start() {
         while isFirstGame {
             do {
                 try startFirstGame()
-            } catch UserCardsError.firstGameInputError {
+            } catch UserCardsError.invalidinputError {
                 print("잘못된 입력입니다. 다시 시도해주세요.")
             } catch {
-                print("에러")
+                print("알 수 없는 오류가 발생했습니다.")
             }
         }
         
         while isSecondGame {
             do {
                 try startSecondGame()
-            } catch UserCardsError.SecondGameInputError {
+            } catch UserCardsError.invalidinputError {
                 print("잘못된 입력입니다. 다시 시도해주세요.")
             } catch {
-                print("에러")
+                print("알 수 없는 오류가 발생했습니다.")
             }
         }
     }
@@ -38,7 +41,7 @@ struct RockPaperScissors {
         let input = readLine()
         guard let inputString = input,
               let user = Int(inputString),
-              let userCards = UserCards(rawValue: user) else { throw UserCardsError.firstGameInputError}
+              let userCards = UserCards(rawValue: user) else { throw UserCardsError.invalidinputError}
             
         switch userCards {
         case .rock, .scissors, .paper:
@@ -57,16 +60,16 @@ struct RockPaperScissors {
             print("비겼습니다!")
         case 1, -2:
             print("이겼습니다!")
-            self.whoseTurn = turnDictionary[true]
+            self.whoseTurn = turnDictionary[isUserTurn]
             isFirstGame = false
             isSecondGame = true
         case -1, 2:
             print("졌습니다!")
-            self.whoseTurn = turnDictionary[false]
+            self.whoseTurn = turnDictionary[isComputerTurn]
             isFirstGame = false
             isSecondGame = true
         default:
-            print("오류")
+            return
         }
     }
     
@@ -75,7 +78,7 @@ struct RockPaperScissors {
         let input = readLine()
         guard let inputString = input,
               let user = Int(inputString),
-              let userCards = UserCards(rawValue: user) else { throw UserCardsError.SecondGameInputError}
+              let userCards = UserCards(rawValue: user) else { throw UserCardsError.invalidinputError}
             
         switch userCards {
         case .rock, .scissors, .paper:
@@ -94,17 +97,17 @@ struct RockPaperScissors {
             print("\(self.whoseTurn ?? "오류3")의 승리!")
             isSecondGame = false
         case -1, 2:
-            if whoseTurn != self.turnDictionary[true] {
+            if whoseTurn != self.turnDictionary[isUserTurn] {
                 changeTurn()
             }
             printTurn()
         case 1, -2:
-            if whoseTurn != self.turnDictionary[false] {
+            if whoseTurn != self.turnDictionary[isComputerTurn] {
                 changeTurn()
             }
             printTurn()
         default:
-            print("오류4")
+            return
         }
     }
     
@@ -114,10 +117,10 @@ struct RockPaperScissors {
     }
     
     mutating func changeTurn() {
-        if self.whoseTurn == self.turnDictionary[true]  {
-            self.whoseTurn = self.turnDictionary[false]
+        if self.whoseTurn == self.turnDictionary[isUserTurn]  {
+            self.whoseTurn = self.turnDictionary[isComputerTurn]
         } else {
-            self.whoseTurn = self.turnDictionary[true]
+            self.whoseTurn = self.turnDictionary[isUserTurn]
         }
     }
     
